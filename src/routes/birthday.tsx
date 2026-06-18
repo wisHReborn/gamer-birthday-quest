@@ -33,7 +33,7 @@ const WISHES = [
 
 function BirthdayPage() {
   const [photoIdx, setPhotoIdx] = useState(0);
-  const [musicOn, setMusicOn] = useState(false);
+  const [musicOn, setMusicOn] = useState(true);
   const [showFireworks, setShowFireworks] = useState(false);
   const audioRef = useRef<HTMLIFrameElement>(null);
 

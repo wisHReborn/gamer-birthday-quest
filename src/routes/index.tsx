@@ -14,16 +14,41 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+// Sound URLs
+const SOUNDS = {
+  TYPE: "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3",
+  SUCCESS: "https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3", // More 'win/level up' sound
+  ERROR: "https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3",
+};
+
 function Index() {
   const navigate = useNavigate();
   const [digits, setDigits] = useState(["", "", "", ""]);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
+  
+  // Audio instances
+  const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
 
   useEffect(() => {
+    // Preload sounds
+    audioRefs.current = {
+      type: new Audio(SOUNDS.TYPE),
+      success: new Audio(SOUNDS.SUCCESS),
+      error: new Audio(SOUNDS.ERROR),
+    };
+    
     inputsRef.current[0]?.focus();
   }, []);
+
+  const playSound = (type: "type" | "success" | "error") => {
+    const sound = audioRefs.current[type];
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play().catch(e => console.log("Audio play blocked:", e));
+    }
+  };
 
   const handleChange = (i: number, v: string) => {
     const d = v.replace(/\D/g, "").slice(-1);
@@ -31,14 +56,21 @@ function Index() {
     next[i] = d;
     setDigits(next);
     setError(false);
-    if (d && i < 3) inputsRef.current[i + 1]?.focus();
+
+    if (d) {
+      playSound("type");
+      if (i < 3) inputsRef.current[i + 1]?.focus();
+    }
+
     if (next.every((x) => x !== "")) {
       const code = next.join("");
       if (code === "1806") {
         setSuccess(true);
-        setTimeout(() => navigate({ to: "/birthday" }), 900);
+        playSound("success");
+        setTimeout(() => navigate({ to: "/birthday" }), 1500);
       } else {
         setError(true);
+        playSound("error");
         setTimeout(() => {
           setDigits(["", "", "", ""]);
           inputsRef.current[0]?.focus();
@@ -48,7 +80,9 @@ function Index() {
   };
 
   const handleKey = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace" && !digits[i] && i > 0) inputsRef.current[i - 1]?.focus();
+    if (e.key === "Backspace" && !digits[i] && i > 0) {
+      inputsRef.current[i - 1]?.focus();
+    }
   };
 
   return (
