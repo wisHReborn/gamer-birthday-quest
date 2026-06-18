@@ -192,18 +192,18 @@ function BirthdayPage() {
           <button
             onClick={prev}
             aria-label="Previous"
-            className="absolute left-2 top-1/2 -translate-y-1/2 rounded border-2 bg-background/80 px-3 py-2 text-lg backdrop-blur transition hover:scale-110"
+            className="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded border-2 bg-background/80 text-lg backdrop-blur transition hover:scale-110"
             style={{ borderColor: "var(--neon-cyan)", color: "var(--neon-cyan)" }}
           >
-            ◄
+            <span className="-translate-y-[2px]">◄</span>
           </button>
           <button
             onClick={next}
             aria-label="Next"
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded border-2 bg-background/80 px-3 py-2 text-lg backdrop-blur transition hover:scale-110"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded border-2 bg-background/80 text-lg backdrop-blur transition hover:scale-110"
             style={{ borderColor: "var(--neon-cyan)", color: "var(--neon-cyan)" }}
           >
-            ►
+            <span className="-translate-y-[2px]">►</span>
           </button>
         </div>
 
