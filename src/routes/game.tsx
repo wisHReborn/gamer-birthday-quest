@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useCallback, useRef } from "react";
+import toon3 from "../../img/toon3.png";
 
 export const Route = createFileRoute("/game")({
   head: () => ({
@@ -19,6 +20,9 @@ const INITIAL_SNAKE = [
 ];
 const INITIAL_DIRECTION = { x: 0, y: -1 };
 
+// 🎵 Same YouTube video ID as birthday page
+const YT_VIDEO_ID = "ru0K8uYEZWw"; // Happy Birthday EDM
+
 function SnakeGame() {
   const [snake, setSnake] = useState(INITIAL_SNAKE);
   const [direction, setDirection] = useState(INITIAL_DIRECTION);
@@ -26,8 +30,10 @@ function SnakeGame() {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+  const [musicOn, setMusicOn] = useState(true);
 
   const directionRef = useRef(INITIAL_DIRECTION);
+  const audioRef = useRef<HTMLIFrameElement>(null);
 
   const changeDirection = useCallback((newDir: { x: number; y: number }) => {
     const current = directionRef.current;
@@ -154,6 +160,37 @@ function SnakeGame() {
         }}
       />
 
+      {/* Hidden YouTube audio player */}
+      {musicOn && (
+        <iframe
+          ref={audioRef}
+          className="pointer-events-none absolute h-0 w-0 opacity-0"
+          src={`https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`}
+          allow="autoplay"
+          title="bgm"
+        />
+      )}
+
+      {/* Floating Music Toggle Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => setMusicOn((v) => !v)}
+          className="group relative flex h-14 w-14 items-center justify-center rounded-full border-2 bg-background/80 backdrop-blur transition-all hover:scale-110 active:scale-95 sm:h-16 sm:w-16"
+          style={{ 
+            borderColor: "var(--neon-cyan)", 
+            color: "var(--neon-cyan)", 
+            boxShadow: musicOn ? "var(--shadow-cyan)" : "none",
+            fontFamily: "'Press Start 2P', monospace" 
+          }}
+          title={musicOn ? "Mute Music" : "Play Music"}
+        >
+          <span className="text-xl sm:text-2xl -translate-y-[2px]">{musicOn ? "♪" : "×"}</span>
+          <span className="absolute -top-10 right-0 hidden whitespace-nowrap rounded border-2 bg-background px-2 py-1 text-[8px] group-hover:block" style={{ borderColor: "var(--neon-cyan)" }}>
+            {musicOn ? "MUSIC: ON" : "MUSIC: OFF"}
+          </span>
+        </button>
+      </div>
+
       <header className="relative z-10 w-full max-w-md flex items-center justify-between mb-6" style={{ fontFamily: "'Press Start 2P', monospace" }}>
         <Link
           to="/birthday"
@@ -198,15 +235,28 @@ function SnakeGame() {
                 >
                   {isFood && <span className="text-xl sm:text-2xl leading-none" style={{ filter: "drop-shadow(0 0 5px var(--neon-pink))" }}>🎂</span>}
                   {isSnake && (
-                    <div
-                      className="w-full h-full"
-                      style={{
-                        backgroundColor: isHead ? "var(--neon-yellow)" : "var(--neon-green)",
-                        borderRadius: isHead ? "4px" : "2px",
-                        transform: "scale(0.9)",
-                        boxShadow: isHead ? "0 0 10px var(--neon-yellow)" : "0 0 5px var(--neon-green)",
-                      }}
-                    />
+                    isHead ? (
+                      <img 
+                        src={toon3} 
+                        alt="Snake Head" 
+                        className="w-full h-full object-cover rounded-full"
+                        style={{
+                          transform: "scale(1.2)",
+                          boxShadow: "0 0 10px var(--neon-yellow)",
+                          zIndex: 10
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full"
+                        style={{
+                          backgroundColor: "var(--neon-green)",
+                          borderRadius: "2px",
+                          transform: "scale(0.9)",
+                          boxShadow: "0 0 5px var(--neon-green)",
+                        }}
+                      />
+                    )
                   )}
                 </div>
               );

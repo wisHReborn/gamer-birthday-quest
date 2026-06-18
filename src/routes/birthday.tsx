@@ -224,9 +224,7 @@ function BirthdayPage() {
           ))}
         </div>
 
-        <p className="mt-4 text-center text-[10px]" style={{ color: "var(--muted-foreground)", fontFamily: "'Kanit', sans-serif" }}>
-          // TIP: เปลี่ยน src ใน PHOTOS[] เพื่อใส่รูปจริง
-        </p>
+        
       </section>
 
       {/* Wishes board */}
@@ -263,23 +261,16 @@ function BirthdayPage() {
             GAME · CLEARED
           </p>
           <p className="mt-4 text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
-            ขอบคุณที่เป็นเพื่อนที่ดีที่สุด ♥<br />
+            ขอบคุณที่เป็นเพื่อนกันน๊ะเลิฟ ♥<br />
             CONTINUE? ► YES ◄
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <button
-              onClick={triggerFireworks}
-              className="rounded border-2 px-5 py-3 text-[10px] transition hover:scale-105"
-              style={{ borderColor: "var(--neon-pink)", color: "var(--neon-pink)", fontFamily: "'Press Start 2P', monospace" }}
-            >
-              🎆 REPLAY FX
-            </button>
             <Link
-              to="/"
-              className="rounded border-2 px-5 py-3 text-[10px] transition hover:scale-105"
-              style={{ borderColor: "var(--neon-cyan)", color: "var(--neon-cyan)", fontFamily: "'Press Start 2P', monospace" }}
+              to="/cake"
+              className="rounded border-2 px-6 py-3 text-xs transition-all hover:scale-105"
+              style={{ borderColor: "var(--neon-yellow)", color: "var(--neon-yellow)", boxShadow: "0 0 10px var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace" }}
             >
-              ⟲ MAIN MENU
+              🎂 LET'S GO
             </Link>
           </div>
         </div>

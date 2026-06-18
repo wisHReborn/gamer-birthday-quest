@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as GameRouteImport } from './routes/game'
+import { Route as CakeRouteImport } from './routes/cake'
 import { Route as BirthdayRouteImport } from './routes/birthday'
 import { Route as IndexRouteImport } from './routes/index'
 
 const GameRoute = GameRouteImport.update({
   id: '/game',
   path: '/game',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CakeRoute = CakeRouteImport.update({
+  id: '/cake',
+  path: '/cake',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BirthdayRoute = BirthdayRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/birthday': typeof BirthdayRoute
+  '/cake': typeof CakeRoute
   '/game': typeof GameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/birthday': typeof BirthdayRoute
+  '/cake': typeof CakeRoute
   '/game': typeof GameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/birthday': typeof BirthdayRoute
+  '/cake': typeof CakeRoute
   '/game': typeof GameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/birthday' | '/game'
+  fullPaths: '/' | '/birthday' | '/cake' | '/game'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/birthday' | '/game'
-  id: '__root__' | '/' | '/birthday' | '/game'
+  to: '/' | '/birthday' | '/cake' | '/game'
+  id: '__root__' | '/' | '/birthday' | '/cake' | '/game'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BirthdayRoute: typeof BirthdayRoute
+  CakeRoute: typeof CakeRoute
   GameRoute: typeof GameRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/game'
       fullPath: '/game'
       preLoaderRoute: typeof GameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cake': {
+      id: '/cake'
+      path: '/cake'
+      fullPath: '/cake'
+      preLoaderRoute: typeof CakeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/birthday': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BirthdayRoute: BirthdayRoute,
+  CakeRoute: CakeRoute,
   GameRoute: GameRoute,
 }
 export const routeTree = rootRouteImport
