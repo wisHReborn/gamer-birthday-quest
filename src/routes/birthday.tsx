@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import confetti from "canvas-confetti";
 import toon1 from "../../img/toon1.jpg";
+import toon2 from "../../img/toon2.jpg";
 
 export const Route = createFileRoute("/birthday")({
   head: () => ({
@@ -22,8 +23,8 @@ const YT_VIDEO_ID = "ru0K8uYEZWw"; // Happy Birthday EDM
 // Add type: "video" to any item to play an MP4 looping video instead of an image
 const PHOTOS = [
   { type: "image", src: toon1, caption: "" },
-  { type: "image", src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900", caption: "" },
-];
+  { type: "image", src: toon2, caption: "" },
+ ];
 
 const WISHES = [
   { from: "Player 2", msg: "สุขสันต์วันเกิดนะเพื่อน! ขอให้ปีนี้ได้ XP เยอะๆ เลเวลอัพรัวๆ 🎮" },
@@ -146,13 +147,13 @@ function BirthdayPage() {
           >
             🎆 LAUNCH FIREWORKS
           </button>
-          <a
-            href="#gallery"
+          <Link
+            to="/game"
             className="rounded border-2 px-6 py-3 text-xs transition-all hover:scale-110"
             style={{ borderColor: "var(--neon-cyan)", color: "var(--neon-cyan)", boxShadow: "var(--shadow-cyan)", fontFamily: "'Press Start 2P', monospace" }}
           >
             ▶ START GAME
-          </a>
+          </Link>
         </div>
       </section>
 
