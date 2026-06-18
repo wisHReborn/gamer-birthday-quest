@@ -73,8 +73,8 @@ function Index() {
               BIRTHDAY<br />QUEST
             </h1>
             <p className="mt-4 text-[10px] leading-relaxed" style={{ color: "var(--neon-yellow)" }}>
-              ENTER 4-DIGIT PASSCODE<br />
-              <span className="text-muted-foreground">(วัน + เดือนเกิด)</span>
+              ENTER 4 PASSCODE<br />
+              <span className="text-muted-foreground" style={{ fontFamily: "'Kanit', sans-serif", fontSize: "12px", verticalAlign: "middle" }}>(วัน + เดือนเกิด)</span>
             </p>
           </div>
 
@@ -107,7 +107,7 @@ function Index() {
           </div>
 
           <p className="mt-6 text-center text-[10px]" style={{ color: error ? "var(--destructive)" : "var(--muted-foreground)", fontFamily: "'Press Start 2P', monospace" }}>
-            {error ? "✗ ACCESS DENIED" : success ? "✓ ACCESS GRANTED..." : "// HINT: DDMM"}
+            {error ? "✗ ACCESS DENIED" : success ? "✓ ACCESS GRANTED..." : ""}
           </p>
         </div>
 

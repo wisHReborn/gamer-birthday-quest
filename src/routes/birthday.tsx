@@ -101,7 +101,7 @@ function BirthdayPage() {
         >
           HAPPY<br />BIRTHDAY!
         </h1>
-        <p className="mx-auto mt-8 max-w-xl text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'VT323', monospace" }}>
+        <p className="mx-auto mt-8 max-w-xl text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
           🎮 +1 YEAR XP GAINED — เลเวลอัพแล้วจ้า! ขอให้ปีนี้เป็นปีที่สนุกที่สุดในเกมชีวิต 🎂
         </p>
 
@@ -141,7 +141,7 @@ function BirthdayPage() {
               />
             ))}
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-              <p className="text-sm" style={{ color: "var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace" }}>
+              <p className="text-sm" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
                 {PHOTOS[photoIdx].caption}
               </p>
             </div>
@@ -181,7 +181,7 @@ function BirthdayPage() {
           ))}
         </div>
 
-        <p className="mt-4 text-center text-[10px]" style={{ color: "var(--muted-foreground)", fontFamily: "'Press Start 2P', monospace" }}>
+        <p className="mt-4 text-center text-[10px]" style={{ color: "var(--muted-foreground)", fontFamily: "'Kanit', sans-serif" }}>
           // TIP: เปลี่ยน src ใน PHOTOS[] เพื่อใส่รูปจริง
         </p>
       </section>
@@ -189,7 +189,8 @@ function BirthdayPage() {
       {/* Wishes board */}
       <section className="relative z-10 mx-auto mt-24 max-w-4xl px-6">
         <h2 className="mb-8 text-center text-xl neon-text" style={{ color: "var(--neon-cyan)", fontFamily: "'Press Start 2P', monospace" }}>
-          // QUEST.LOG — คำอวยพร
+          <span style={{ fontFamily: "'Press Start 2P', monospace" }}>// QUEST.LOG — </span>
+          <span style={{ fontFamily: "'Kanit', sans-serif" }}>คำอวยพร</span>
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {WISHES.map((w, i) => (
@@ -204,7 +205,7 @@ function BirthdayPage() {
               <div className="mb-2 text-[10px]" style={{ color: "var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace" }}>
                 ► FROM: {w.from}
               </div>
-              <p className="text-lg leading-snug" style={{ color: "var(--foreground)", fontFamily: "'VT323', monospace" }}>
+              <p className="text-lg leading-snug" style={{ color: "var(--foreground)", fontFamily: "'Kanit', sans-serif" }}>
                 {w.msg}
               </p>
             </article>
@@ -218,7 +219,7 @@ function BirthdayPage() {
           <p className="text-2xl neon-text" style={{ color: "var(--neon-green)", fontFamily: "'Press Start 2P', monospace" }}>
             GAME · CLEARED
           </p>
-          <p className="mt-4 text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'VT323', monospace" }}>
+          <p className="mt-4 text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
             ขอบคุณที่เป็นเพื่อนที่ดีที่สุด ♥<br />
             CONTINUE? ► YES ◄
           </p>
