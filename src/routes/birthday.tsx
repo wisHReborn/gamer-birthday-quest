@@ -275,7 +275,7 @@ function BirthdayPage() {
           </div>
         </div>
         <p className="mt-6 text-[10px]" style={{ color: "var(--muted-foreground)", fontFamily: "'Press Start 2P', monospace" }}>
-          © BIRTHDAY QUEST v1.0 — MADE WITH ♥
+          © BIRTHDAY ♥
         </p>
       </footer>
 
