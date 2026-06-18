@@ -136,7 +136,7 @@ function BirthdayPage() {
           HAPPY<br />BIRTHDAY!
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
-          🎮 +1 YEAR XP GAINED — สุขสันวันเกิด! ขอให้ปีนี้เป็นปีที่สนุกที่สุด 🎂
+          🎮 +1 YEAR XP GAINED — สุขสันวันเกิดเพื่อนตูน! ขอให้ปีนี้เป็นปีที่สนุกที่สุด 🎂
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4">

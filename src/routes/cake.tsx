@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
+import { startBirthdayMelody, stopBirthdayMelody } from "../lib/audio-synth";
 
 export const Route = createFileRoute("/cake")({
   head: () => ({
@@ -12,16 +13,42 @@ export const Route = createFileRoute("/cake")({
   component: CakePage,
 });
 
-// 🎵 Same YouTube video ID to keep the music seamless
-const YT_VIDEO_ID = "ru0K8uYEZWw"; 
-
 function CakePage() {
   const [isBlown, setIsBlown] = useState(false);
   const [musicOn, setMusicOn] = useState(true);
-  const audioRef = useRef<HTMLIFrameElement>(null);
+  const fireworkSound = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Start playing the melody automatically when the page loads
+    startBirthdayMelody();
+    
+    // Preload firework sound
+    fireworkSound.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2576/2576-preview.mp3");
+
+    // Stop the melody when leaving the page (e.g., clicking Back)
+    return () => {
+      stopBirthdayMelody();
+    };
+  }, []);
+
+  const toggleMusic = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (musicOn) {
+      stopBirthdayMelody();
+    } else {
+      startBirthdayMelody();
+    }
+    setMusicOn(!musicOn);
+  };
 
   const handleBlow = () => {
     setIsBlown(true);
+    
+    if (fireworkSound.current) {
+      fireworkSound.current.currentTime = 0;
+      fireworkSound.current.play().catch(e => console.log("Sound blocked", e));
+    }
+    
     confetti({
       particleCount: 150,
       spread: 80,
@@ -42,21 +69,10 @@ function CakePage() {
         }}
       />
 
-      {/* Hidden YouTube audio player */}
-      {musicOn && (
-        <iframe
-          ref={audioRef}
-          className="pointer-events-none absolute h-0 w-0 opacity-0"
-          src={`https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&loop=1&playlist=${YT_VIDEO_ID}`}
-          allow="autoplay"
-          title="bgm"
-        />
-      )}
-
       {/* Floating Music Toggle Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <button
-          onClick={() => setMusicOn((v) => !v)}
+          onClick={toggleMusic}
           className="group relative flex h-14 w-14 items-center justify-center rounded-full border-2 bg-background/80 backdrop-blur transition-all hover:scale-110 active:scale-95 sm:h-16 sm:w-16"
           style={{ 
             borderColor: "var(--neon-cyan)", 
@@ -92,7 +108,7 @@ function CakePage() {
         </h1>
 
         <p className="text-center text-base sm:text-lg mb-20" style={{ color: "var(--neon-cyan)", fontFamily: "'Kanit', sans-serif" }}>
-          {isBlown ? "ขอให้คำอธิษฐานเป็นจริงนะ! 🎉" : "หลับตาอธิษฐาน แล้วกดปุ่มเป่าเทียนเลย!"}
+          {isBlown ? "ขอให้คำอธิษฐานเป็นจริงน๊เพื่อน! 🎉" : "หลับตาอธิษฐาน แล้วกดปุ่มเป่าเทียนเลยเพื่อน!"}
         </p>
 
         {/* Cake Container */}
