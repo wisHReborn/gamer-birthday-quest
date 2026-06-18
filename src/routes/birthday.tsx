@@ -27,10 +27,10 @@ const PHOTOS = [
  ];
 
 const WISHES = [
-  { from: "Player 2", msg: "สุขสันต์วันเกิดนะเพื่อน! ขอให้ปีนี้ได้ XP เยอะๆ เลเวลอัพรัวๆ 🎮" },
-  { from: "Squad", msg: "อายุยืนยาวเหมือน HP bar ที่เต็มตลอด ขอให้ทุก quest ผ่านฉลุย ❤️" },
-  { from: "Co-op Bestie", msg: "ขอบคุณที่เป็นเพื่อนร่วมทีมที่ดีที่สุด GG WP!" },
-  { from: "Guild Master", msg: "ปีใหม่นี้ unlock achievement ใหม่ๆ ให้เพียบเลย ✨" },
+  { 
+    from: "P'Reborn", 
+    msg: "สุขสันต์วันเกิดเพิ่อนตูน! 🎉 ขอให้ปีนี้เลเวลอัพแบบก้าวกระโดด ได้รับ XP ความสุขเต็มหลอด HP แข็งแกร่งไม่มีลด ขอให้ทุกปัญหา ในชีวิตผ่านฉลุยเหมือนปรับโหมด Easy และขอบคุณที่เป็นเพื่อน ที่ดีที่สุดเสมอมา... GG WP! เลิฟๆ นะ ❤️🎮✨" 
+  }
 ];
 
 function BirthdayPage() {
@@ -139,7 +139,7 @@ function BirthdayPage() {
           🎮 +1 YEAR XP GAINED — สุขสันวันเกิด! ขอให้ปีนี้เป็นปีที่สนุกที่สุด 🎂
         </p>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
+        <div className="mt-10 flex flex-col items-center justify-center gap-4">
           <button
             onClick={triggerFireworks}
             className="rounded border-2 px-6 py-3 text-xs transition-all hover:scale-110"
@@ -230,23 +230,24 @@ function BirthdayPage() {
       {/* Wishes board */}
       <section className="relative z-10 mx-auto mt-24 max-w-4xl px-6">
         <h2 className="mb-8 text-center text-xl neon-text" style={{ color: "var(--neon-cyan)", fontFamily: "'Press Start 2P', monospace" }}>
-          <span style={{ fontFamily: "'Press Start 2P', monospace" }}>// QUEST.LOG — </span>
+          {/* <span style={{ fontFamily: "'Press Start 2P', monospace" }}>// QUEST.LOG — </span> */}
           <span style={{ fontFamily: "'Kanit', sans-serif" }}>คำอวยพร</span>
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-1 md:max-w-2xl mx-auto">
           {WISHES.map((w, i) => (
             <article
               key={i}
-              className="rounded-lg border-2 p-5 transition-transform hover:scale-[1.02]"
+              className="rounded-lg border-2 p-6 transition-transform hover:scale-[1.02]"
               style={{
-                borderColor: i % 2 === 0 ? "var(--neon-pink)" : "var(--neon-cyan)",
+                borderColor: "var(--neon-pink)",
                 background: "oklch(0.22 0.05 280 / 0.6)",
+                boxShadow: "0 0 15px var(--neon-pink)"
               }}
             >
-              <div className="mb-2 text-[10px]" style={{ color: "var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="mb-4 text-xs" style={{ color: "var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace" }}>
                 ► FROM: {w.from}
               </div>
-              <p className="text-lg leading-snug" style={{ color: "var(--foreground)", fontFamily: "'Kanit', sans-serif" }}>
+              <p className="text-xl leading-relaxed text-center" style={{ color: "var(--foreground)", fontFamily: "'Kanit', sans-serif" }}>
                 {w.msg}
               </p>
             </article>
@@ -261,7 +262,7 @@ function BirthdayPage() {
             GAME · CLEARED
           </p>
           <p className="mt-4 text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
-            ขอบคุณที่เป็นเพื่อนกันน๊ะเลิฟ ♥<br />
+            ขอบคุณที่เป็นเพื่อนกันน๊ะเลิฟ ไม่มีเค้กให้ มาเป่าเค้กออนไลน์แทนเนาะ5555 ♥<br />
             CONTINUE? ► YES ◄
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
