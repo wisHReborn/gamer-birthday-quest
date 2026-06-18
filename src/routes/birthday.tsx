@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
+import confetti from "canvas-confetti";
+import toon1 from "../../img/toon1.jpg";
 
 export const Route = createFileRoute("/birthday")({
   head: () => ({
@@ -17,11 +19,10 @@ export const Route = createFileRoute("/birthday")({
 const YT_VIDEO_ID = "ru0K8uYEZWw"; // Happy Birthday EDM
 
 // 📸 Placeholder photos — replace src with your friend's photos
+// Add type: "video" to any item to play an MP4 looping video instead of an image
 const PHOTOS = [
-  { src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900", caption: "LEVEL 1: ความทรงจำสุดเจ๋ง" },
-  { src: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=900", caption: "LEVEL 2: ผจญภัยด้วยกัน" },
-  { src: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=900", caption: "LEVEL 3: ปาร์ตี้ตลอดกาล" },
-  { src: "https://images.unsplash.com/photo-1559655980-9a0bf0b9c25e?w=900", caption: "BOSS FIGHT: เป่าเทียน!" },
+  { type: "image", src: toon1, caption: "" },
+  { type: "image", src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900", caption: "" },
 ];
 
 const WISHES = [
@@ -34,8 +35,13 @@ const WISHES = [
 function BirthdayPage() {
   const [photoIdx, setPhotoIdx] = useState(0);
   const [musicOn, setMusicOn] = useState(true);
-  const [showFireworks, setShowFireworks] = useState(false);
+  const [showCongrats, setShowCongrats] = useState(false);
   const audioRef = useRef<HTMLIFrameElement>(null);
+  const fireworkSound = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    fireworkSound.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2576/2576-preview.mp3");
+  }, []);
 
   const next = () => setPhotoIdx((i) => (i + 1) % PHOTOS.length);
   const prev = () => setPhotoIdx((i) => (i - 1 + PHOTOS.length) % PHOTOS.length);
@@ -46,8 +52,32 @@ function BirthdayPage() {
   }, []);
 
   const triggerFireworks = () => {
-    setShowFireworks(true);
-    setTimeout(() => setShowFireworks(false), 4000);
+    if (fireworkSound.current) {
+      fireworkSound.current.currentTime = 0;
+      fireworkSound.current.play().catch(e => console.log("Sound blocked", e));
+    }
+
+    setShowCongrats(true);
+    setTimeout(() => setShowCongrats(false), 5000);
+
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+    const interval: any = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+      // since particles fall down, start a bit higher than random
+      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+    }, 250);
   };
 
   return (
@@ -105,7 +135,7 @@ function BirthdayPage() {
           HAPPY<br />BIRTHDAY!
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
-          🎮 +1 YEAR XP GAINED — เลเวลอัพแล้วจ้า! ขอให้ปีนี้เป็นปีที่สนุกที่สุดในเกมชีวิต 🎂
+          🎮 +1 YEAR XP GAINED — สุขสันวันเกิด! ขอให้ปีนี้เป็นปีที่สนุกที่สุด 🎂
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -128,20 +158,29 @@ function BirthdayPage() {
 
       {/* Photo Carousel */}
       <section id="gallery" className="relative z-10 mx-auto mt-24 max-w-4xl px-6">
-        <h2 className="mb-6 text-center text-xl neon-text" style={{ color: "var(--neon-green)", fontFamily: "'Press Start 2P', monospace" }}>
-          // MEMORY.GALLERY
-        </h2>
-
         <div className="relative overflow-hidden rounded-lg border-2" style={{ borderColor: "var(--neon-pink)", boxShadow: "var(--shadow-neon)" }}>
           <div className="relative aspect-video bg-muted">
             {PHOTOS.map((p, i) => (
-              <img
-                key={i}
-                src={p.src}
-                alt={p.caption}
-                className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
-                style={{ opacity: i === photoIdx ? 1 : 0 }}
-              />
+              p.type === "video" ? (
+                <video
+                  key={i}
+                  src={p.src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+                  style={{ opacity: i === photoIdx ? 1 : 0 }}
+                />
+              ) : (
+                <img
+                  key={i}
+                  src={p.src}
+                  alt={p.caption}
+                  className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+                  style={{ opacity: i === photoIdx ? 1 : 0 }}
+                />
+              )
             ))}
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
               <p className="text-sm" style={{ color: "var(--neon-yellow)", fontFamily: "'Kanit', sans-serif" }}>
@@ -248,44 +287,17 @@ function BirthdayPage() {
         </p>
       </footer>
 
-      {/* Fireworks overlay */}
-      {showFireworks && <Fireworks />}
-    </div>
-  );
-}
-
-function Fireworks() {
-  const colors = ["var(--neon-pink)", "var(--neon-cyan)", "var(--neon-green)", "var(--neon-yellow)"];
-  const particles = Array.from({ length: 60 });
-  return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
-      {particles.map((_, i) => {
-        const left = Math.random() * 100;
-        const delay = Math.random() * 2;
-        const size = 6 + Math.random() * 10;
-        const color = colors[i % colors.length];
-        return (
-          <span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${left}%`,
-              bottom: 0,
-              width: size,
-              height: size,
-              background: color,
-              boxShadow: `0 0 ${size * 2}px ${color}`,
-              animation: `float-up ${2 + Math.random() * 1.5}s ease-out ${delay}s forwards`,
-            }}
-          />
-        );
-      })}
-      <div
-        className="absolute inset-x-0 top-1/3 text-center text-4xl neon-text animate-pulse-neon sm:text-6xl"
-        style={{ color: "var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace" }}
-      >
-        ★ CONGRATS! ★
-      </div>
+      {/* Congrats overlay */}
+      {showCongrats && (
+        <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
+          <div
+            className="text-center text-4xl neon-text animate-pulse-neon sm:text-6xl"
+            style={{ color: "var(--neon-yellow)", fontFamily: "'Press Start 2P', monospace", textShadow: "0 0 20px var(--neon-yellow), 0 0 40px var(--neon-yellow)" }}
+          >
+            ★ CONGRATS! ★
+          </div>
+        </div>
+      )}
     </div>
   );
 }
