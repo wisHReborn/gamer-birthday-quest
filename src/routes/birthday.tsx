@@ -73,22 +73,25 @@ function BirthdayPage() {
         />
       )}
 
-      {/* HUD top bar */}
-      <header className="relative z-10 flex items-center justify-between border-b-2 px-6 py-4" style={{ borderColor: "var(--neon-pink)", background: "oklch(0.16 0.04 280 / 0.8)", fontFamily: "'Press Start 2P', monospace" }}>
-        <div className="text-xs" style={{ color: "var(--neon-cyan)" }}>
-          ► PLAYER 1 // HP: <span style={{ color: "var(--neon-green)" }}>∞</span>
-        </div>
-        <div className="hidden text-xs sm:block" style={{ color: "var(--neon-yellow)" }}>
-          STAGE: BIRTHDAY-2026
-        </div>
+      {/* Floating Music Toggle Button */}
+      <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setMusicOn((v) => !v)}
-          className="rounded border-2 px-3 py-2 text-[10px] transition-all hover:scale-105"
-          style={{ borderColor: "var(--neon-cyan)", color: "var(--neon-cyan)", boxShadow: musicOn ? "var(--shadow-cyan)" : "none" }}
+          className="group relative flex h-14 w-14 items-center justify-center rounded-full border-2 bg-background/80 backdrop-blur transition-all hover:scale-110 active:scale-95 sm:h-16 sm:w-16"
+          style={{ 
+            borderColor: "var(--neon-cyan)", 
+            color: "var(--neon-cyan)", 
+            boxShadow: musicOn ? "var(--shadow-cyan)" : "none",
+            fontFamily: "'Press Start 2P', monospace" 
+          }}
+          title={musicOn ? "Mute Music" : "Play Music"}
         >
-          {musicOn ? "♪ MUSIC: ON" : "♪ MUSIC: OFF"}
+          <span className="text-xl sm:text-2xl -translate-y-[2px]">{musicOn ? "♪" : "×"}</span>
+          <span className="absolute -top-10 right-0 hidden whitespace-nowrap rounded border-2 bg-background px-2 py-1 text-[8px] group-hover:block" style={{ borderColor: "var(--neon-cyan)" }}>
+            {musicOn ? "MUSIC: ON" : "MUSIC: OFF"}
+          </span>
         </button>
-      </header>
+      </div>
 
       {/* Hero */}
       <section className="relative z-10 px-6 pt-16 text-center">
