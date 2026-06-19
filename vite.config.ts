@@ -12,13 +12,9 @@ const baseConfig = lovableConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  nitro: true,
 });
 
 // Create a final config object that explicitly has a 'plugins' property at the top level
 // This is to satisfy the Cloudflare Pages automated build parser.
-const finalConfig = {
-  ...baseConfig,
-  plugins: [...((baseConfig as any).plugins || [])]
-};
-
-export default finalConfig;
+export default baseConfig;
